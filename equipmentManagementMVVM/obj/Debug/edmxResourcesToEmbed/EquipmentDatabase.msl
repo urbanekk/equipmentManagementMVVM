@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="reservations_dbModelStoreContainer" CdmEntityContainer="reservations_dbEntities">
+    <EntitySetMapping Name="equipment">
+      <EntityTypeMapping TypeName="reservations_dbModel.equipment">
+        <MappingFragment StoreEntitySet="equipment">
+          <ScalarProperty Name="idEquipment" ColumnName="idEquipment" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="EID" ColumnName="EID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="reservations">
+      <EntityTypeMapping TypeName="reservations_dbModel.reservations">
+        <MappingFragment StoreEntitySet="reservations">
+          <ScalarProperty Name="idReservations" ColumnName="idReservations" />
+          <ScalarProperty Name="idUser" ColumnName="idUser" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="StopDate" ColumnName="StopDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="user">
+      <EntityTypeMapping TypeName="reservations_dbModel.user">
+        <MappingFragment StoreEntitySet="user">
+          <ScalarProperty Name="idUser" ColumnName="idUser" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserType" ColumnName="UserType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="reservation_equipment" TypeName="reservations_dbModel.reservation_equipment" StoreEntitySet="reservation_equipment">
+      <EndProperty Name="equipment">
+        <ScalarProperty Name="idEquipment" ColumnName="idEquipment" />
+      </EndProperty>
+      <EndProperty Name="reservations">
+        <ScalarProperty Name="idReservations" ColumnName="idReservation" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
