@@ -6,7 +6,11 @@
         xmlns:local="clr-namespace:ED_MVVM.Views"
         xmlns:vm="clr-namespace:ED_MVVM.ViewModels"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="200" Width="200">
+        Title="Login" Height="200" Width="300"
+        MinHeight="200"
+        MinWidth="300"
+        MaxHeight="200"
+        MaxWidth="300">
 
     <Window.Resources>
         <vm:LoginVM x:Key="loginVM"/>

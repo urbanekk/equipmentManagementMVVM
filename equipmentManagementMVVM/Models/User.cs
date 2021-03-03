@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
+using ED_MVVM.Models;
 
 namespace ED_MVVM
 {
@@ -14,41 +15,45 @@ namespace ED_MVVM
             UserType = "user";
         }
 
+
+
+        public string FullName
+        {
+            get
+            {
+                return Name + " " + Surname;
+            }
+        }
+
+
+
         // read current user objects in database
         // check if user with provided login already exists
         // return true or false
         private bool CheckIfExistsInDatabase()
         {
-            using (reservations_dbEntities context = new reservations_dbEntities())
+            bool exists = false;
+
+            List<string> Logins = DBQueries.QueryAllLogin();
+
+            foreach (var item in Logins)
             {
-                List<user> userList = context.user.ToList<user>();
-
-                bool exists = false;
-
-                foreach (var item in userList)
-                {
-                    if (item.Login == Login)
-                        exists = true;
-                }
-
-                return exists;
+                if(item == Login)
+                    exists = true;
             }
+
+            return exists;
         }
 
         // save user instance to database
-        // provide feedback to VM to present proper message in View
+        // provide feedback to VM
         // true - successfuly saved user
         // false - login already in use
         public bool SaveToDatabase()
         {
             if (!CheckIfExistsInDatabase())
             {
-                using (reservations_dbEntities context = new reservations_dbEntities())
-                {
-                    // save to DB.user
-                    context.user.Add(this);
-                    context.SaveChanges();
-                }
+                DBQueries.UserSaveToDatabase(this);
 
                 return true;
             }
@@ -56,5 +61,3 @@ namespace ED_MVVM
         }
     }
 }
-
-// to do - baza danych - autoinkrementacja rekordów

@@ -6,29 +6,35 @@
         xmlns:local="clr-namespace:ED_MVVM"
         xmlns:vm="clr-namespace:ED_MVVM.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Equipment Management" Height="500" Width="800"
+        MinHeight="500"
+        MinWidth="800">
 
     <Window.Resources>
+        <vm:MainWindowVM x:Key="mainWindowVM"/>
+        <vm:ManageReservationsVM x:Key="manageReservationsVM"/>
         <vm:AddUserVM x:Key="addUserVM"/>
-        <vm:AddEquipmentVM x:Key="addEquipmentVM"/>        
+        <vm:AddEquipmentVM x:Key="addEquipmentVM"/>
     </Window.Resources>
 
     <Grid>
-        <TabControl x:Name="tabControl" Height="399" Margin="10,10,10,0" VerticalAlignment="Top">
-            <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5"/>
+        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,40">
+            <TabItem Header="Reservations">
+                <Grid DataContext="{StaticResource manageReservationsVM}" Background="#FFE5E5E5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0">
+                    <DataGrid x:Name="reservationsDataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,10,10" ItemsSource="{Binding Path=Reservations}" SelectedItem="{Binding Path=Reservation}"/>
+                </Grid>
             </TabItem>
-            <TabItem Header="Create Account">
+            <TabItem Header="Manage Accounts" DataContext="{StaticResource mainWindowVM}" Visibility="{Binding AccountTabVisibility, Mode=OneWay}">
                 <Grid DataContext="{StaticResource addUserVM}" Background="#FFE5E5E5" Margin="0,0,0,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="113*"/>
-                        <ColumnDefinition Width="653*"/>
+                        <ColumnDefinition Width="100*"/>
+                        <ColumnDefinition Width="400*"/>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="firstNameLabel" Content="First name:" HorizontalAlignment="Left" Margin="42,66,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="lastNameLabel" Content="Last name:" HorizontalAlignment="Left" Margin="40,107,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="fullNameLabel" Content="Full name:" HorizontalAlignment="Left" Margin="42,149,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="loginLabel" Content="Login:" HorizontalAlignment="Left" Margin="64,192,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="passwordLabel" Content="Password:" HorizontalAlignment="Left" Margin="43,238,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="firstNameLabel" Content="First name:" HorizontalAlignment="Right" Margin="19,66,0,0" VerticalAlignment="Top" Grid.Column="0"/>
+                    <Label x:Name="lastNameLabel" Content="Last name:" HorizontalAlignment="Right" Margin="17,107,0,0" VerticalAlignment="Top" Grid.Column="0"/>
+                    <Label x:Name="fullNameLabel" Content="Full name:" HorizontalAlignment="Right" Margin="19,149,0,0" VerticalAlignment="Top" Grid.Column="0"/>
+                    <Label x:Name="loginLabel" Content="Login:" HorizontalAlignment="Right" Margin="41,192,0,0" VerticalAlignment="Top" Grid.Column="0"/>
+                    <Label x:Name="passwordLabel" Content="Password:" HorizontalAlignment="Right" Margin="20,238,0,0" VerticalAlignment="Top" Grid.Column="0"/>
                     <TextBox x:Name="firstNameTextBox" HorizontalAlignment="Left" Height="22" Margin="1,70,0,0" TextWrapping="Wrap" Text="{Binding FirstName, Mode=OneWayToSource}" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
                     <TextBox x:Name="surnameTextBox" HorizontalAlignment="Left" Height="24" Margin="1,109,0,0" TextWrapping="Wrap" Text="{Binding LastName, Mode=OneWayToSource}" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
                     <TextBox x:Name="fullNameTextBox" HorizontalAlignment="Left" Height="22" Margin="1,153,0,0" TextWrapping="Wrap" Text="{Binding FullName, Mode=OneWay}" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
@@ -37,22 +43,23 @@
                     <Button x:Name="addUserButton" Content="Add user" HorizontalAlignment="Left" Margin="1,301,0,0" VerticalAlignment="Top" Width="120" Height="28" Command="{Binding AddUserCommand}" Grid.Column="1"/>
                 </Grid>
             </TabItem>
-
-            <TabItem Header="Add equipment">
+            <TabItem Header="Manage Equipments" DataContext="{StaticResource mainWindowVM}" Visibility="{Binding EquipmentTabVisibility, Mode=OneWay}">
                 <Grid DataContext="{StaticResource addEquipmentVM}" Background="#FFE5E5E5" Margin="0,0,0,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="150*"/>
-                        <ColumnDefinition Width="653*"/>
+                        <ColumnDefinition Width="100*"/>
+                        <ColumnDefinition Width="400*"/>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="equipmentNameLabel" Content="Equipment name:" HorizontalAlignment="Left" Margin="42,66,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="113"/>
-                    <Label x:Name="ownerFullNameLabel" Content="Owner name:" HorizontalAlignment="Left" Margin="40,107,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="eidLabel" Content="EID:" HorizontalAlignment="Left" Margin="42,149,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="equipmentNameLabel" Content="Equipment name:" HorizontalAlignment="Right" Margin="42,66,0,0" VerticalAlignment="Top" Grid.Column="0"/>
+                    <Label x:Name="ownerFullNameLabel" Content="Owner name:" HorizontalAlignment="Right" Margin="40,107,0,0" VerticalAlignment="Top" Grid.Column="0"/>
+                    <Label x:Name="eidLabel" Content="EID:" HorizontalAlignment="Right" Margin="42,149,0,0" VerticalAlignment="Top" Grid.Column="0"/>
                     <TextBox x:Name="equipmentNameTextbox" HorizontalAlignment="Left" Height="22" Margin="12,70,0,0" TextWrapping="Wrap" Text="{Binding Name, Mode=OneWayToSource}" VerticalAlignment="Top" Width="155" Grid.Column="1"/>
-                    <ComboBox x:Name="ownerNameCombobox" Grid.Column="1" HorizontalAlignment="Left" Margin="12,107,0,0" VerticalAlignment="Top" Width="155" ItemsSource="{Binding Path=Users}" SelectedItem="{Binding Path=User}" DisplayMemberPath="Surname"/>
+                    <ComboBox x:Name="ownerNameCombobox" HorizontalAlignment="Left" Margin="12,107,0,0" VerticalAlignment="Top" Width="155" ItemsSource="{Binding Path=Users}" SelectedItem="{Binding Path=Owner}" Grid.Column="1"/>
                     <TextBox x:Name="eidTextbox" HorizontalAlignment="Left" Height="22" Margin="12,153,0,0" TextWrapping="Wrap" Text="{Binding EID, Mode=OneWayToSource}" VerticalAlignment="Top" Width="155" Grid.Column="1"/>
                     <Button x:Name="addEquipmentButton" Content="Add equipment" HorizontalAlignment="Left" Margin="12,213,0,0" VerticalAlignment="Top" Width="155" Height="28" Command="{Binding AddEquipmentCommand}" Grid.Column="1"/>
                 </Grid>
             </TabItem>
         </TabControl>
+        <Label Content="User: " HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,10,10,10"/>
+        <Label  DataContext="{StaticResource mainWindowVM}" x:Name="userLabel" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="50,10,10,10" Content="{Binding UserFullname, Mode=OneTime}"/>
     </Grid>
 </Window>

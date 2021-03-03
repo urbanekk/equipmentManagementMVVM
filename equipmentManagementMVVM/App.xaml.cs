@@ -13,5 +13,6 @@ namespace ED_MVVM
     /// </summary>
     public partial class App : Application
     {
+
     }
 }

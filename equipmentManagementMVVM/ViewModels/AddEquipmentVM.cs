@@ -11,54 +11,27 @@ namespace ED_MVVM.ViewModels
     {
         public AddEquipmentVM()
         {
-            Users = new ObservableCollection<user>();
-            Users = DBQueries.GetRegisteredUsers();
+            Users = new ObservableCollection<string>(DBQueries.GetRegisteredUsersFullnames());
         }
 
-        private ObservableCollection<user> _users;
-        private user _user;
-
-        private string _name;
-        private string _owner; // accessible via comboBox -> only user which is already in database
-        private string _EID;
-
-        public ObservableCollection<user> Users
+        public ObservableCollection<string> Users
         {
-            get { return _users; }
-            set { _users = value; }
-        }
-
-        public user User
-        {
-            get { return _user; }
-            set { _user = value; }
+            get; set;
         }
 
         public string Name
         {
-            get { return _name; }
-            set
-            {
-                _name = value;
-            }
+            get; set;
         }
 
         public string Owner
         {
-            get { return _owner; }
-            set
-            {
-                _owner = value;
-            }
+            get; set;
         }
 
         public string EID
         {
-            get { return _EID; }
-            set
-            {
-                _EID = value;
-            }
+            get; set;
         }
 
 
@@ -85,13 +58,18 @@ namespace ED_MVVM.ViewModels
         {
             bool addingStatus;
 
-            equipment newEquipment = new equipment(Name, Owner, EID);
-            addingStatus = newEquipment.SaveToDatabase();
+            if (Name != null && Owner != null && EID != null)
+            {
+                equipment newEquipment = new equipment(Name, Owner, EID);
+                addingStatus = newEquipment.SaveToDatabase();
 
-            if (addingStatus)
-                MessageBox.Show("Success! Equipment added to database!");
-            else
-                MessageBox.Show("Equipment could not be added to database!");
+                if (addingStatus)
+                    MessageBox.Show("Success! Equipment added to database!");
+                else
+                    MessageBox.Show("Equipment could not be added to database!");
+            }
+            else MessageBox.Show("Fill in all empty boxes!");
+            
         }
     }
 }

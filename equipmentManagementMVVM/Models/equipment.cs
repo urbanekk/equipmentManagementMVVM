@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ED_MVVM.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ED_MVVM
@@ -17,37 +18,28 @@ namespace ED_MVVM
         // return true or false
         private bool CheckIfExistsInDatabase()
         {
-            using (reservations_dbEntities context = new reservations_dbEntities())
+            bool exists = false;
+
+            List<string> equipmentNames = DBQueries.QueryAllEquipmentNames();
+
+            foreach (var item in equipmentNames)
             {
-                List<equipment> equipmentList = context.equipment.ToList<equipment>();
-
-                bool exists = false;
-
-                foreach (var item in equipmentList)
-                {
-                    if (item.Name == Name)
-                        exists = true;
-                }
-
-                return exists;
+                if (item == Name)
+                    exists = true;
             }
+
+            return exists;
         }
 
         // save equipment instance to database
-        // provide feedback to VM to present proper message in View
+        // provide feedback to VM
         // true - successfuly saved equipment
         // false - equipment already in exists in DB
         public bool SaveToDatabase()
         {
             if (!CheckIfExistsInDatabase())
             {
-                using (reservations_dbEntities context = new reservations_dbEntities())
-                {
-                    // save to DB.user
-                    context.equipment.Add(this);
-                    context.SaveChanges();
-                }
-
+                DBQueries.EquipmentSaveToDatabase(this);
                 return true;
             }
             else return false;

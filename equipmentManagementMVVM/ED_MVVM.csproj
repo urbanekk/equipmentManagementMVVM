@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>window_new_icon_181230.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>packages\BouncyCastle.1.8.3.1\lib\BouncyCastle.Crypto.dll</HintPath>
@@ -109,6 +112,7 @@
     </Compile>
     <Compile Include="Models\DBQueries.cs" />
     <Compile Include="Models\equipment.cs" />
+    <Compile Include="Models\PresentReservations.cs" />
     <Compile Include="reservations.cs">
       <DependentUpon>EquipmentDatabase.tt</DependentUpon>
     </Compile>
@@ -119,6 +123,8 @@
     <Compile Include="ViewModels\DelegateCommand.cs" />
     <Compile Include="ViewModels\AddUserVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
+    <Compile Include="ViewModels\MainWindowVM.cs" />
+    <Compile Include="ViewModels\ManageReservationsVM.cs" />
     <Compile Include="ViewModels\ObservableObject.cs" />
     <Compile Include="Views\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
@@ -186,6 +192,7 @@
       <DependentUpon>EquipmentDatabase.edmx</DependentUpon>
       <LastGenOutput>EquipmentDatabase.cs</LastGenOutput>
     </Content>
+    <Resource Include="window_new_icon_181230.ico" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

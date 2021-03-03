@@ -83,19 +83,23 @@ namespace ED_MVVM.ViewModels
         /// </summary>
         /// 
 
-        // create new user in DB using provided data in View
-        // !!! need to add validation of data (no empty boxes)
+        // create new user in DB using data provided in View
         private void CreateAccount()
         {   
             bool createStatus;
 
-            user newUser = new user(FirstName, LastName, Login, Password);
-            createStatus = newUser.SaveToDatabase();
+            if(FirstName != null && LastName != null && Login != null && Password != null)
+            {
+                user newUser = new user(FirstName, LastName, Login, Password);
+                createStatus = newUser.SaveToDatabase();
 
-            if (createStatus)
-                MessageBox.Show("Account created successfully!");
-            else
-                MessageBox.Show("Login already exists. Try another one.");
+                if (createStatus)
+                    MessageBox.Show("Account created successfully!");
+                else
+                    MessageBox.Show("Login already exists. Try another one.");
+            }
+            else MessageBox.Show("Fill in all empty boxes!");
+            
         }
     }
 }
